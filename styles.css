@@ -201,7 +201,7 @@ body {
   left: -15px;
   width: 140px;
   height: 48px;
-  background: url('/images/button-glow-fixed.webp') no-repeat center/cover;
+  background: url('images/button-glow-fixed.webp') no-repeat center/cover;
   z-index: 1;
   pointer-events: none;
   opacity: 1;
@@ -215,7 +215,7 @@ body {
   transform: translateY(-50%);
   width: 60px;
   height: 60px;
-  background: url('/images/click.webp') no-repeat center/contain;
+  background: url('images/click.webp') no-repeat center/contain;
   pointer-events: none;
   z-index: 2;
 }
@@ -223,7 +223,7 @@ body {
 .render-element {
   width: 600px;
   height: 600px;
-  background: url('/images/4ball3drender.webp') no-repeat center/contain;
+  background: url('images/4ball3drender.webp') no-repeat center/contain;
   margin: -140px auto;
   z-index: 2;
   position: relative;
@@ -236,7 +236,7 @@ body {
   right: 5%;
   width: 200px;
   height: 200px;
-  background: url('/images/background element copy.webp') no-repeat center/contain;
+  background: url('images/background element copy.webp') no-repeat center/contain;
   pointer-events: none;
   z-index: 1;
   opacity: 0.8;
