@@ -86,6 +86,12 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScrollTop = scrollTop;
     }, { passive: true });
     
+    // Slideshow functionality
+    initializeSlideshows();
+    
+    // Services slideshow functionality
+    initializeServicesSlideshow();
+
     // Performance monitoring
     if ('performance' in window) {
         window.addEventListener('load', () => {
@@ -94,3 +100,129 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Global slideshow functionality
+function initializeSlideshows() {
+    const slideshows = document.querySelectorAll('.slideshow-container');
+    
+    slideshows.forEach((slideshow, index) => {
+        const slides = slideshow.querySelectorAll('.slide');
+        const dots = slideshow.querySelectorAll('.slide-dots .dot');
+        const prevBtn = slideshow.querySelector('.slide-prev');
+        const nextBtn = slideshow.querySelector('.slide-next');
+        
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        
+        // Auto-play functionality
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlide(slideshow, currentSlide);
+        }, 5000); // Change slide every 5 seconds
+        
+        // Dot navigation
+        dots.forEach((dot, dotIndex) => {
+            dot.addEventListener('click', () => {
+                currentSlide = dotIndex;
+                updateSlide(slideshow, currentSlide);
+            });
+        });
+        
+        // Arrow navigation
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateSlide(slideshow, currentSlide);
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateSlide(slideshow, currentSlide);
+            });
+        }
+    });
+}
+
+function updateSlide(slideshow, slideIndex) {
+    const slides = slideshow.querySelectorAll('.slide');
+    const dots = slideshow.querySelectorAll('.slide-dots .dot');
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Show current slide
+    if (slides[slideIndex]) {
+        slides[slideIndex].classList.add('active');
+    }
+    if (dots[slideIndex]) {
+        dots[slideIndex].classList.add('active');
+    }
+}
+
+// Global function for arrow navigation
+function changeSlide(sectionId, direction) {
+    const section = document.getElementById(sectionId);
+    const slideshow = section.querySelector('.slideshow-container');
+    const slides = slideshow.querySelectorAll('.slide');
+    const dots = slideshow.querySelectorAll('.slide-dots .dot');
+    
+    let currentSlide = 0;
+    dots.forEach((dot, index) => {
+        if (dot.classList.contains('active')) {
+            currentSlide = index;
+        }
+    });
+    
+    const totalSlides = slides.length;
+    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+    updateSlide(slideshow, currentSlide);
+}
+
+// Services slideshow functionality
+function initializeServicesSlideshow() {
+    const servicesSlideshow = document.querySelector('.services-slideshow');
+    if (!servicesSlideshow) return;
+    
+    const slides = servicesSlideshow.querySelectorAll('.service-slide');
+    const navButtons = servicesSlideshow.querySelectorAll('.service-nav-btn');
+    
+    let currentSlideIndex = 0;
+    const totalSlides = slides.length;
+    
+    // Auto-play functionality
+    setInterval(() => {
+        currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+        updateServicesSlide(currentSlideIndex);
+    }, 4000); // Change slide every 4 seconds
+    
+    // Navigation button functionality
+    navButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            currentSlideIndex = index;
+            updateServicesSlide(currentSlideIndex);
+        });
+    });
+}
+
+function updateServicesSlide(slideIndex) {
+    const servicesSlideshow = document.querySelector('.services-slideshow');
+    if (!servicesSlideshow) return;
+    
+    const slides = servicesSlideshow.querySelectorAll('.service-slide');
+    const navButtons = servicesSlideshow.querySelectorAll('.service-nav-btn');
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    navButtons.forEach(button => button.classList.remove('active'));
+    
+    // Show current slide
+    if (slides[slideIndex]) {
+        slides[slideIndex].classList.add('active');
+    }
+    if (navButtons[slideIndex]) {
+        navButtons[slideIndex].classList.add('active');
+    }
+}
