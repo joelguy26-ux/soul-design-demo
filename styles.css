@@ -31,14 +31,14 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, 
-    #ffffff 0%, 
-    #f8fafc 25%, 
-    #f1f5f9 50%, 
-    #e2e8f0 75%, 
-    #f8fafc 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+  /* Simple Geometric Pattern Background */
+  background-color: #fafafa;
+  background-image: 
+    radial-gradient(circle at 25% 25%, #dcdcdc 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, #b9b9b9 2px, transparent 2px);
+  background-size: 60px 60px;
+  background-position: 0 0, 30px 30px;
+  
   overflow-x: hidden;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -272,6 +272,7 @@ body::before {
   align-items: center;
   justify-content: center;
   background: var(--apple-gray);
+  margin-bottom: 120px; /* Equal spacing after video section */
 }
 
 .video-container {
@@ -327,6 +328,11 @@ body::before {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  margin-bottom: 120px; /* Equal spacing after each hero section */
+}
+
+.hero:last-of-type {
+  margin-bottom: 0; /* Remove margin from the last hero section */
 }
 
 .hero-container {
@@ -1140,6 +1146,7 @@ body::before {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  margin-bottom: 120px; /* Equal spacing after about section */
 }
 
 .about-container {
