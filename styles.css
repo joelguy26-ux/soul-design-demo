@@ -157,7 +157,8 @@ body::before {
   left: 100%;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: #1d1d1f;
   background: rgba(0, 212, 255, 0.15);
   border: 1px solid rgba(0, 212, 255, 0.4);
@@ -187,15 +188,16 @@ body::before {
 .action-btn {
   background: var(--souls-blue-dark);
   color: white;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .action-btn::before {
@@ -216,6 +218,7 @@ body::before {
 .action-btn:hover {
   background: var(--souls-blue-light);
   color: var(--souls-blue-dark);
+  border: 1px solid rgba(0, 212, 255, 0.4);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
 }
@@ -333,15 +336,142 @@ body::before {
   width: 100%;
 }
 
+/* Hero Card Flip Effect - From Uiverse.io by suleymanlaarabidev */
+.hero {
+  border-radius: 15px;
+  margin: 20px;
+  text-decoration: none;
+  z-index: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  cursor: pointer;
+}
+
+.hero:hover {
+  border-radius: 15px;
+  transform: scale(1.05);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  background: linear-gradient(135deg, var(--souls-blue-light) 0%, var(--souls-blue-dark) 100%);
+}
+
+.hero-content {
+  height: 100%;
+  width: 100%;
+  transition: all 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  border-radius: 15px;
+  position: relative;
+}
+
+.hero:hover .hero-content {
+  height: 0px;
+  opacity: 0;
+}
+
+.hero-second-content {
+  height: 0%;
+  width: 100%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  transition: all 0.4s;
+  font-size: 0px;
+  transform: rotate(90deg) scale(-1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, var(--souls-blue-light) 0%, var(--souls-blue-dark) 100%);
+}
+
+.hero:hover .hero-second-content {
+  opacity: 1;
+  height: 100%;
+  font-size: 1.8rem;
+  transform: rotate(0deg);
+}
+
 .hero-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  gap: 60px;
   align-items: center;
+  height: 100%;
+}
+
+.hero-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hero-content-box {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+  opacity: 0;
+  transform: translateX(50px);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.8s ease;
+}
+
+.hero:hover .hero-content-box {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.hero:hover .hero-content-box::before {
+  left: 100%;
+}
+
+.hero-content-box h3 {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.hero-content-box p {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
 }
 
 .hero-text {
   text-align: left;
+  max-width: 600px;
 }
 
 .hero-title {
@@ -427,11 +557,13 @@ body::before {
   line-height: 1.6;
   color: white;
   margin: 0;
+  transition: all 0.5s ease;
 }
 
 .company-description .bold-first-sentence {
   font-weight: 800;
   color: #f0f9ff;
+  transition: all 0.5s ease;
 }
 
 /* Services Slideshow */
@@ -678,6 +810,16 @@ body::before {
   padding: 120px 0;
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(10px);
+}
+
+/* Second Hero Section */
+.hero-second {
+  margin-top: 60px; /* Few centimeters spacing from first hero */
+}
+
+/* Add full screen height spacing before first gallery section */
+.gallery-section:first-of-type {
+  margin-top: 100vh;
 }
 
 .gallery-grid {
