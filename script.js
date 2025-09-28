@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Services slideshow functionality
     initializeServicesSlideshow();
 
+    // Glass radio group functionality
+    initializeGlassRadioGroup();
+
     // Performance monitoring
     if ('performance' in window) {
         window.addEventListener('load', () => {
@@ -225,4 +228,36 @@ function updateServicesSlide(slideIndex) {
     if (navButtons[slideIndex]) {
         navButtons[slideIndex].classList.add('active');
     }
+}
+
+// Glass Radio Group Functionality
+function initializeGlassRadioGroup() {
+    const interactiveHero = document.getElementById('interactive-hero');
+    const radioButtons = document.querySelectorAll('input[name="glass-radio"]');
+    
+    if (!interactiveHero || !radioButtons.length) return;
+    
+    function updateHeroColor(selectedId) {
+        // Remove all color classes
+        interactiveHero.classList.remove('hero-marketing', 'hero-photography', 'hero-videography');
+        
+        // Add the appropriate color class based on selection
+        if (selectedId.includes('marketing')) {
+            interactiveHero.classList.add('hero-marketing');
+        } else if (selectedId.includes('photography')) {
+            interactiveHero.classList.add('hero-photography');
+        } else if (selectedId.includes('videography')) {
+            interactiveHero.classList.add('hero-videography');
+        }
+    }
+    
+    // Radio group event listeners
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            updateHeroColor(this.id);
+        });
+    });
+    
+    // Set initial state
+    interactiveHero.classList.add('hero-marketing');
 }

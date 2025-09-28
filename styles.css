@@ -336,72 +336,103 @@ body::before {
   width: 100%;
 }
 
-/* Hero Card Flip Effect - From Uiverse.io by suleymanlaarabidev */
+/* Hero Layered Card Effect - From Uiverse.io by gharsh11032000 */
 .hero {
-  border-radius: 15px;
-  margin: 20px;
-  text-decoration: none;
-  z-index: 0;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 24px;
+  line-height: 1.6;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
   cursor: pointer;
 }
 
-.hero:hover {
-  border-radius: 15px;
-  transform: scale(1.05);
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
-  background: linear-gradient(135deg, var(--souls-blue-light) 0%, var(--souls-blue-dark) 100%);
-}
-
 .hero-content {
-  height: 100%;
-  width: 100%;
-  transition: all 0.4s;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 1;
-  border-radius: 15px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 36px;
+  border-radius: 22px;
+  color: #ffffff;
+  overflow: hidden;
+  background: var(--souls-blue-dark);
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
-}
-
-.hero:hover .hero-content {
-  height: 0px;
-  opacity: 0;
-}
-
-.hero-second-content {
-  height: 0%;
   width: 100%;
-  opacity: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  transition: all 0.4s;
-  font-size: 0px;
-  transform: rotate(90deg) scale(-1);
+  min-height: 400px;
+}
+
+.hero-content::before {
   position: absolute;
-  top: 0;
-  left: 0;
-  background: linear-gradient(135deg, var(--souls-blue-light) 0%, var(--souls-blue-dark) 100%);
+  content: "";
+  top: -4%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%);
+  background: rgba(0, 212, 255, 0.3);
+  z-index: -1;
+  transform-origin: bottom;
+  border-radius: inherit;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.hero:hover .hero-second-content {
+.hero-content::after {
+  position: absolute;
+  content: "";
+  top: -8%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  transform: translate(-50%);
+  background: rgba(0, 212, 255, 0.1);
+  z-index: -2;
+  transform-origin: bottom;
+  border-radius: inherit;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hero-content .para {
+  z-index: 1;
   opacity: 1;
-  height: 100%;
-  font-size: 1.8rem;
-  transform: rotate(0deg);
+  font-size: 18px;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.hero-content {
+.hero:hover {
+  transform: translate(0px, -16px);
+}
+
+.hero:hover .hero-content::before {
+  rotate: -8deg;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero:hover .hero-content::after {
+  rotate: 8deg;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Remove the second content since we're not using flip anymore */
+.hero-second-content {
+  display: none;
+}
+
+/* Hero content grid layout for two-column design */
+.hero-content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
   height: 100%;
+  width: 100%;
 }
 
 .hero-left {
@@ -467,6 +498,144 @@ body::before {
   line-height: 1.6;
   text-align: center;
   margin: 0;
+}
+
+/* Glass Radio Group - From Uiverse.io by chase2k25 */
+.glass-radio-group {
+  --bg: rgba(255, 255, 255, 0.06);
+  --text: #e5e5e5;
+
+  display: flex;
+  position: relative;
+  background: var(--bg);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    inset 1px 1px 4px rgba(255, 255, 255, 0.2),
+    inset -1px -1px 6px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  width: fit-content;
+  margin: 40px auto;
+}
+
+.glass-radio-group input {
+  display: none;
+}
+
+.glass-radio-group label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  font-size: 16px;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease-in-out;
+  font-family: 'Poppins', sans-serif;
+}
+
+.glass-radio-group label:hover {
+  color: white;
+}
+
+.glass-radio-group input:checked + label {
+  color: #fff;
+}
+
+.glass-glider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(100% / 3);
+  border-radius: 1rem;
+  z-index: 1;
+  transition:
+    transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56),
+    background 0.4s ease-in-out,
+    box-shadow 0.4s ease-in-out;
+}
+
+/* Blue (Marketing) */
+#glass-marketing:checked ~ .glass-glider {
+  transform: translateX(0%);
+  background: linear-gradient(135deg, var(--souls-blue-dark), var(--souls-blue-light));
+  box-shadow:
+    0 0 18px rgba(9, 9, 121, 0.5),
+    0 0 10px rgba(0, 212, 255, 0.4) inset;
+}
+
+/* Red (Photography) */
+#glass-photography:checked ~ .glass-glider {
+  transform: translateX(100%);
+  background: linear-gradient(135deg, #e02610, #ff4444);
+  box-shadow:
+    0 0 18px rgba(224, 38, 16, 0.5),
+    0 0 10px rgba(255, 68, 68, 0.4) inset;
+}
+
+/* Green (Videography) */
+#glass-videography:checked ~ .glass-glider {
+  transform: translateX(200%);
+  background: linear-gradient(135deg, #35cb36, #4ade80);
+  box-shadow:
+    0 0 18px rgba(53, 203, 54, 0.5),
+    0 0 10px rgba(74, 222, 128, 0.4) inset;
+}
+
+/* Dynamic Hero Background Colors */
+.hero.hero-marketing {
+  background: linear-gradient(135deg, #07075a 0%, #090979 100%);
+}
+
+.hero.hero-marketing .hero-content {
+  background: var(--souls-blue-dark);
+}
+
+.hero.hero-marketing .hero-content::before {
+  background: rgba(0, 212, 255, 0.3);
+}
+
+.hero.hero-marketing .hero-content::after {
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.hero.hero-photography {
+  background: linear-gradient(135deg, #8b1a0a 0%, #e02610 100%);
+}
+
+.hero.hero-photography .hero-content {
+  background: #e02610;
+}
+
+.hero.hero-photography .hero-content::before {
+  background: rgba(255, 68, 68, 0.3);
+}
+
+.hero.hero-photography .hero-content::after {
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.hero.hero-videography {
+  background: linear-gradient(135deg, #1e7a1e 0%, #35cb36 100%);
+}
+
+.hero.hero-videography .hero-content {
+  background: #35cb36;
+}
+
+.hero.hero-videography .hero-content::before {
+  background: rgba(74, 222, 128, 0.3);
+}
+
+.hero.hero-videography .hero-content::after {
+  background: rgba(74, 222, 128, 0.1);
 }
 
 .hero-text {
