@@ -230,25 +230,67 @@ function updateServicesSlide(slideIndex) {
     }
 }
 
+// Global Theme Management
+function applyTheme(theme) {
+    // Remove all theme classes from body
+    document.body.classList.remove('theme-marketing', 'theme-photography', 'theme-videography');
+    
+    // Add the appropriate theme class
+    if (theme === 'marketing') {
+        document.body.classList.add('theme-marketing');
+    } else if (theme === 'photography') {
+        document.body.classList.add('theme-photography');
+    } else if (theme === 'videography') {
+        document.body.classList.add('theme-videography');
+    }
+    
+    // Store theme in localStorage
+    localStorage.setItem('soulsMediaTheme', theme);
+}
+
+// Initialize theme on page load (for all pages)
+function initializeTheme() {
+    // Get saved theme from localStorage or default to marketing
+    const savedTheme = localStorage.getItem('soulsMediaTheme') || 'marketing';
+    applyTheme(savedTheme);
+}
+
 // Glass Radio Group Functionality
 function initializeGlassRadioGroup() {
     const interactiveHero = document.getElementById('interactive-hero');
     const radioButtons = document.querySelectorAll('input[name="glass-radio"]');
     
-    if (!interactiveHero || !radioButtons.length) return;
+    if (!interactiveHero || !radioButtons.length) {
+        return; // Page doesn't have radio group, but theme is already applied
+    }
     
     function updateHeroColor(selectedId) {
-        // Remove all color classes
+        // Remove all color classes from hero sections
         interactiveHero.classList.remove('hero-marketing', 'hero-photography', 'hero-videography');
         
-        // Add the appropriate color class based on selection
+        // Determine theme based on selection
+        let theme = 'marketing';
         if (selectedId.includes('marketing')) {
+            theme = 'marketing';
             interactiveHero.classList.add('hero-marketing');
         } else if (selectedId.includes('photography')) {
+            theme = 'photography';
             interactiveHero.classList.add('hero-photography');
         } else if (selectedId.includes('videography')) {
+            theme = 'videography';
             interactiveHero.classList.add('hero-videography');
         }
+        
+        // Apply theme globally
+        applyTheme(theme);
+    }
+    
+    // Get saved theme and select the appropriate radio button
+    const savedTheme = localStorage.getItem('soulsMediaTheme') || 'marketing';
+    const radioToSelect = document.getElementById(`glass-${savedTheme}`);
+    if (radioToSelect) {
+        radioToSelect.checked = true;
+        updateHeroColor(radioToSelect.id);
     }
     
     // Radio group event listeners
@@ -257,7 +299,176 @@ function initializeGlassRadioGroup() {
             updateHeroColor(this.id);
         });
     });
-    
-    // Set initial state
-    interactiveHero.classList.add('hero-marketing');
 }
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize theme first (applies to all pages)
+    initializeTheme();
+    
+    // Focus buttons in navigation (new design) with two-way sync
+    const focusButtons = document.querySelectorAll('.focus-btn');
+    const glassRadios = {
+        'marketing': document.getElementById('glass-marketing'),
+        'photography': document.getElementById('glass-photography'),
+        'videography': document.getElementById('glass-videography')
+    };
+    
+    if (focusButtons.length > 0) {
+        // Focus button click handler
+        focusButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                focusButtons.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Get theme from data attribute
+                const theme = this.getAttribute('data-theme');
+                
+                // Apply theme
+                applyTheme(theme);
+                
+                // Sync with glass radio group in hero section
+                if (glassRadios[theme]) {
+                    glassRadios[theme].checked = true;
+                    
+                    // Trigger change event to update glider position
+                    const event = new Event('change', { bubbles: true });
+                    glassRadios[theme].dispatchEvent(event);
+                    
+                    // Add sync animation
+                    const glassRadioGroup = document.querySelector('.glass-radio-group');
+                    if (glassRadioGroup) {
+                        glassRadioGroup.classList.add('syncing');
+                        setTimeout(() => glassRadioGroup.classList.remove('syncing'), 400);
+                    }
+                    
+                    // Optional: Smooth scroll to hero section to show the sync
+                    const heroSection = document.getElementById('interactive-hero');
+                    if (heroSection && window.scrollY < 100) {
+                        heroSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+        
+        // Set initial active state based on current theme
+        const currentTheme = localStorage.getItem('soulsMediaTheme') || 'marketing';
+        focusButtons.forEach(btn => {
+            if (btn.getAttribute('data-theme') === currentTheme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+    
+    // Glass radio buttons - sync back to focus buttons
+    Object.keys(glassRadios).forEach(theme => {
+        const radio = glassRadios[theme];
+        if (radio) {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    // Apply theme
+                    applyTheme(theme);
+                    
+                    // Update focus buttons in nav with animation
+                    focusButtons.forEach(btn => {
+                        if (btn.getAttribute('data-theme') === theme) {
+                            btn.classList.add('active');
+                            btn.classList.add('syncing');
+                            setTimeout(() => btn.classList.remove('syncing'), 400);
+                        } else {
+                            btn.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }
+    });
+    
+    // Sidebar Navigation - Tab always visible, hover to reveal
+    const sidebarTab = document.getElementById('sidebarTab');
+    const pagesSidebar = document.getElementById('pagesSidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    
+    if (sidebarTab && pagesSidebar && sidebarOverlay) {
+        let sidebarTimeout;
+        
+        // Open sidebar on hover over tab
+        sidebarTab.addEventListener('mouseenter', function() {
+            clearTimeout(sidebarTimeout);
+            pagesSidebar.classList.add('open');
+            sidebarTab.classList.add('active');
+            sidebarOverlay.classList.add('show');
+        });
+        
+        // Keep sidebar open when hovering over it
+        pagesSidebar.addEventListener('mouseenter', function() {
+            clearTimeout(sidebarTimeout);
+            pagesSidebar.classList.add('open');
+            sidebarTab.classList.add('active');
+            sidebarOverlay.classList.add('show');
+        });
+        
+        // Close sidebar with delay when mouse leaves tab
+        sidebarTab.addEventListener('mouseleave', function(e) {
+            if (!pagesSidebar.contains(e.relatedTarget)) {
+                sidebarTimeout = setTimeout(() => {
+                    pagesSidebar.classList.remove('open');
+                    sidebarTab.classList.remove('active');
+                    sidebarOverlay.classList.remove('show');
+                }, 300);
+            }
+        });
+        
+        // Close sidebar with delay when mouse leaves sidebar
+        pagesSidebar.addEventListener('mouseleave', function() {
+            sidebarTimeout = setTimeout(() => {
+                pagesSidebar.classList.remove('open');
+                sidebarTab.classList.remove('active');
+                sidebarOverlay.classList.remove('show');
+            }, 300);
+        });
+        
+        // Toggle sidebar on tab click (for touch devices)
+        sidebarTab.addEventListener('click', function() {
+            pagesSidebar.classList.toggle('open');
+            sidebarTab.classList.toggle('active');
+            sidebarOverlay.classList.toggle('show');
+        });
+        
+        // Close sidebar when clicking overlay
+        sidebarOverlay.addEventListener('click', function() {
+            pagesSidebar.classList.remove('open');
+            sidebarTab.classList.remove('active');
+            sidebarOverlay.classList.remove('show');
+        });
+        
+        // Close sidebar on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && pagesSidebar.classList.contains('open')) {
+                pagesSidebar.classList.remove('open');
+                sidebarTab.classList.remove('active');
+                sidebarOverlay.classList.remove('show');
+            }
+        });
+        
+        // Highlight active page in sidebar
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const pageLinks = pagesSidebar.querySelectorAll('.page-link');
+        pageLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    // Initialize other features
+    initializeSlideshows();
+    initializeServicesSlideshow();
+    initializeGlassRadioGroup();
+});
