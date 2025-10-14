@@ -158,6 +158,7 @@ body.theme-videography .apple-header {
   display: block;
   width: 160px;
   height: 160px;
+  pointer-events: none;
 }
 
 .nav-brand .logo {
@@ -205,12 +206,6 @@ body.theme-videography .logo-default {
 
 body.theme-videography .logo-green {
   opacity: 0.98;
-}
-
-.nav-brand:hover .logo-default,
-.nav-brand:hover .logo-red,
-.nav-brand:hover .logo-green {
-  opacity: 1;
 }
 
 .nav-links {
@@ -546,12 +541,6 @@ body.theme-videography .sidebar-logo-default {
 
 body.theme-videography .sidebar-logo-green {
   opacity: 0.95;
-}
-
-.sidebar-logo-wrapper:hover .sidebar-logo-default,
-.sidebar-logo-wrapper:hover .sidebar-logo-red,
-.sidebar-logo-wrapper:hover .sidebar-logo-green {
-  opacity: 1;
 }
 
 .pages-group {
