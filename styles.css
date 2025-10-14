@@ -150,17 +150,66 @@ body.theme-videography .apple-header {
 .nav-brand {
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+.nav-brand a {
+  position: relative;
+  display: block;
+  width: 160px;
+  height: 160px;
 }
 
 .nav-brand .logo {
   width: 160px;
   height: 160px;
   object-fit: contain;
-  opacity: 0.98;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
 }
 
-.nav-brand .logo:hover {
+.logo-default {
+  opacity: 0.98;
+  z-index: 1;
+  position: relative;
+}
+
+.logo-red {
+  opacity: 0;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logo-green {
+  opacity: 0;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Show red logo when photography theme is active */
+body.theme-photography .logo-default {
+  opacity: 0;
+}
+
+body.theme-photography .logo-red {
+  opacity: 0.98;
+}
+
+/* Show green logo when videography theme is active */
+body.theme-videography .logo-default {
+  opacity: 0;
+}
+
+body.theme-videography .logo-green {
+  opacity: 0.98;
+}
+
+.nav-brand:hover .logo-default,
+.nav-brand:hover .logo-red,
+.nav-brand:hover .logo-green {
   opacity: 1;
 }
 
@@ -445,17 +494,63 @@ body.theme-videography .sidebar-tab {
   background: rgba(255, 255, 255, 0.5);
 }
 
+.sidebar-logo-wrapper {
+  position: relative;
+  width: 140px;
+  margin: 0 auto;
+}
+
 .sidebar-logo {
   width: 140px;
   height: auto;
-  margin: 0 auto;
-  display: block;
-  opacity: 0.95;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 
-.sidebar-logo:hover {
+.sidebar-logo-default {
+  opacity: 0.95;
+  z-index: 1;
+  position: relative;
+  display: block;
+}
+
+.sidebar-logo-red {
+  opacity: 0;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.sidebar-logo-green {
+  opacity: 0;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Show red logo in sidebar when photography theme is active */
+body.theme-photography .sidebar-logo-default {
+  opacity: 0;
+}
+
+body.theme-photography .sidebar-logo-red {
+  opacity: 0.95;
+}
+
+/* Show green logo in sidebar when videography theme is active */
+body.theme-videography .sidebar-logo-default {
+  opacity: 0;
+}
+
+body.theme-videography .sidebar-logo-green {
+  opacity: 0.95;
+}
+
+.sidebar-logo-wrapper:hover .sidebar-logo-default,
+.sidebar-logo-wrapper:hover .sidebar-logo-red,
+.sidebar-logo-wrapper:hover .sidebar-logo-green {
   opacity: 1;
 }
 
@@ -966,7 +1061,7 @@ body.theme-videography .social-icon:hover {
   align-items: center;
   justify-content: center;
   width: 100%;
-  border-radius: 24px;
+  border-radius: 0;
   line-height: 1.6;
   transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
   cursor: pointer;
@@ -978,7 +1073,7 @@ body.theme-videography .social-icon:hover {
   align-items: flex-start;
   gap: 24px;
   padding: 36px;
-  border-radius: 22px;
+  border-radius: 0;
   color: #ffffff;
   overflow: hidden;
   background: var(--souls-blue-dark);
@@ -1074,7 +1169,7 @@ body.theme-videography .social-icon:hover {
 .hero-content-box {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
+  border-radius: 0;
   padding: 40px;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -1131,7 +1226,7 @@ body.theme-videography .social-icon:hover {
   display: flex;
   position: relative;
   background: var(--bg);
-  border-radius: 1rem;
+  border-radius: 0;
   backdrop-filter: blur(12px);
   box-shadow:
     inset 1px 1px 4px rgba(255, 255, 255, 0.2),
@@ -1198,7 +1293,7 @@ body.theme-videography .social-icon:hover {
   top: 0;
   bottom: 0;
   width: calc(100% / 3);
-  border-radius: 1rem;
+  border-radius: 0;
   z-index: 1;
   transition:
     transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56),
@@ -1391,7 +1486,7 @@ body.theme-videography {
   position: relative;
   height: 400px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  border-radius: 0;
   padding: 40px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
