@@ -972,7 +972,7 @@ body.theme-videography .social-icon:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--apple-gray);
+  background: url('../images/hero-background.webp') center/cover no-repeat;
   margin-bottom: 120px; /* Equal spacing after video section */
 }
 
